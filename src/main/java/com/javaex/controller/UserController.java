@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.UserService;
-import com.javaex.vo.GuestbookVo;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -44,17 +43,53 @@ public class UserController {
 		
 		return "user/joinform";
 	}
-	
-	@RequestMapping(value="/insert", method=RequestMethod.POST)
+	  
+	@RequestMapping(value="/user/join", method=RequestMethod.GET)
 	public String join(@ModelAttribute UserVo userVo) {
-		System.out.println("insert 진입");
+		System.out.println("join 진입");
 		System.out.println(userVo.toString());
 		
 		userService.join(userVo);
 
-		return "redirect:/joinsuccess";
+		return "user/joinsuccess";
 	}
 	
+	@RequestMapping(value="/user/modifyform", method=RequestMethod.GET)
+	public String modifyform(HttpSession session) {
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser == null) {
+			return "redirect:/user/loginform";
+		} else {
+
+			return "user/modifyform";
+		}
+	}
+	
+	@RequestMapping(value="/user/modify", method=RequestMethod.GET)
+	public String modify(@ModelAttribute UserVo userVo, HttpSession session) {
+		
+		System.out.println("modify진입");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		userVo.setNo(authUser.getNo());
+		int result = userService.modify(userVo);
+		System.out.println("처리결과 : " + result);
+		authUser.setName(userVo.getName());
+		
+		return "redirect:/main";
+	}
+	
+	@RequestMapping(value="/user/logout", method=RequestMethod.GET)
+	public String logout(HttpSession session) {
+		
+		System.out.println("logout진입");
+		session.invalidate();
+		
+		return "redirect:/main";
+	}
+		
 	
 	
 	

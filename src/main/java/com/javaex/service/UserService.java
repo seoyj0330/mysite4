@@ -22,5 +22,16 @@ public class UserService {
 		
 		userDao.insert(userVo);
 	}
+
+	public int modify(UserVo userVo) {
+		return userDao.modify(userVo);
+	}
+	
+//	public UserVo modifyform(int no) {
+//		
+//		return userDao.getUser(no);
+//	}
+	
+
 	
 }

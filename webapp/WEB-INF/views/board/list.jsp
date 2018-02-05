@@ -8,7 +8,7 @@
 <head>
 	<title>mysite</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -21,10 +21,9 @@
 		
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="/mysite/board" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board/list" method="get">
 					<input type="text" id="kwd" name="kwd" value="">
 					<input type="submit" value="찾기">
-					<input type="hidden" name="a" value="list">
 				</form>
 				<table class="tbl-ex">
 					<tr>
@@ -38,25 +37,25 @@
 					<c:forEach items = "${list }" var="userboardVo">
 					<tr>
 						<td>${userboardVo.boardno }</td>
-						<td><a href="/mysite/board?a=viewform&boardno=${userboardVo.boardno }">${userboardVo.title }</a></td>
+						<td><a href="${pageContext.request.contextPath }/board/view?boardno=${userboardVo.boardno }">${userboardVo.title }</a></td>
 						<td>${userboardVo.name }</td>
 						<td>${userboardVo.hit }</td>
-						<td>${userboardVo.date }</td>
+						<td>${userboardVo.regDate }</td>
 						
 						
 						
 						<c:choose>
 							<c:when test="${empty authUser }">	<!-- 로그인 안했을 때 -->
-							
+								<td></td>
 							</c:when>
 							
 							<c:otherwise>	<!-- 로그인 했을때  -->
 								<c:choose>
 									<c:when test="${authUser.no  eq userboardVo.user_no}">
-										<td><a href="/mysite/board?a=delete&deleteno=${userboardVo.boardno }" class="del">삭제</a></td>
+										<td><a href="${pageContext.request.contextPath }/board/delete?deleteno=${userboardVo.boardno }" class="del">삭제</a></td>
 									</c:when>
 									<c:otherwise>
-										
+										<td></td>
 									</c:otherwise>
 								</c:choose>
 							</c:otherwise>
@@ -83,7 +82,7 @@
 					</c:when>
 					<c:otherwise>
 						<div class="bottom">
-						<a href="/mysite/board?a=writeform" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board/writeform" id="new-book">글쓰기</a>
 						</div>
 					</c:otherwise>
 				</c:choose>

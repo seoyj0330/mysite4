@@ -29,5 +29,13 @@ public class UserDao {
 		sqlSession.insert("user.join",userVo);
 	}
 	
+/*	public UserVo getUser(int no) {
+		
+		return sqlSession.selectOne("user.selectUserByNo", no);
+	}*/
 	
+	public int modify(UserVo userVo) {
+		
+		return sqlSession.update("user.modify", userVo);
+	}
 }

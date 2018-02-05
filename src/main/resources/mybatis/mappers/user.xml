@@ -5,7 +5,7 @@
 	
 	<select id="selectUserByEmailPW" parameterType="map" resultType="com.javaex.vo.UserVo">	<!-- getter&setter를 이용하기 때문에 vo의 이름과 쿼리와 맞춰주기 -->
 		<![CDATA[
-				select no, name
+				select no, name, gender
 				from users
 				where email = #{email}
 				and password = #{password}
@@ -18,6 +18,17 @@
 		]]>
 	</insert>
 	
+ 	<select id="selectUserByNo" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+				 select no, name, email, password, gender from users where no = #{no} 
 	
-
+		]]>	
+	</select>  
+	
+	<update id= "modify" parameterType="com.javaex.vo.UserVo">
+		<![CDATA[
+				update users set name = #{name}, password = #{password}, gender = #{gender}
+				where no = #{no} 
+		]]>
+	</update>
 </mapper>

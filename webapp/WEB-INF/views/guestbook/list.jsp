@@ -9,7 +9,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link href="/mysite/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath }/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 	<title>Insert title here</title>
 </head>
 <body>
@@ -27,7 +27,7 @@
 				<div id="guestbook">
 						
 						<!-- 폼에서 나온 데이터를 어떤방식으로 어디로 보낼지 고르는것-->
-					<form action="/mysite/gb" method="get">
+					<form action="${pageContext.request.contextPath }/guestbook/add" method="get">
 						
 						<table>
 							<tr>
@@ -41,7 +41,6 @@
 								<td colspan=4 align=right><input type="submit" VALUE=" 확인 " /></td>
 							</tr> 	
 						</table>
-						<input type="text" name = "a" value= "add">
 					</form>
 					<ul>
 						<li>
@@ -51,8 +50,8 @@
 								<tr>
 									<td>${gbVo.no} </td>
 									<td>${gbVo.name} </td>
-									<td>${gbVo.date} </td>
-									<td><a href="/mysite/gb?a=deleteform&no=${gbVo.no }">삭제</a></td>
+									<td>${gbVo.regDate} </td>
+									<td><a href="${pageContext.request.contextPath }/guestbook/deleteform?no=${gbVo.no }">삭제</a></td>
 								</tr>
 								<tr>
 									<td colspan=4>${gbVo.content}</td>

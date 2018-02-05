@@ -5,7 +5,7 @@
 <head>
 	<title>mysite</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
+	<link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -24,19 +24,19 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${volist.title }</td>
+						<td>${bVo.title }</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								${volist.content }
+								${bVo.content }
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="/mysite/board?a=list">글목록</a>
+					<a href="${pageContext.request.contextPath }/board/list">글목록</a>
 					
 				<c:choose>
 					<c:when test="${empty authUser }">
@@ -44,8 +44,8 @@
 					</c:when>	
 					<c:otherwise>		<!-- 로그인했을 때 -->
 						<c:choose>
-							<c:when test="${authUser.no eq volist.user_no}">
-									<a href="/mysite/board?a=modifyform&boardno=${volist.no }">글수정</a>
+							<c:when test="${authUser.no eq bVo.user_no}">
+									<a href="${pageContext.request.contextPath }/board/modifyform?boardno=${bVo.no }">글수정</a>
 							</c:when>
 							<c:otherwise>
 					

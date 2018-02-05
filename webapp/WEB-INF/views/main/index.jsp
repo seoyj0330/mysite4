@@ -30,7 +30,7 @@
 						
 						<br>
 						<br>
-						<a href="${pageContext.request.contextPath }/guestbook">방명록</a>에 글 남기기
+						<a href="${pageContext.request.contextPath }/guestbook/list">방명록</a>에 글 남기기
 						<br>
 					</p>
 				</div>

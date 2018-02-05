@@ -22,14 +22,14 @@
 			<c:when test ="${empty authUser }"><!-- authUser가 null이면  -->
 			
 				<!-- 로그인 전 -->
-				<li><a href="${pageContext.request.contextPath }user?a=loginform">로그인</a></li>
-				<li><a href="${pageContext.request.contextPath }user?a=joinform">회원가입</a></li>
+				<li><a href="${pageContext.request.contextPath }/user/loginform">로그인</a></li>
+				<li><a href="${pageContext.request.contextPath }/user/joinform">회원가입</a></li>
 			</c:when>	
 				<%-- <% } else {  %> --%>		
 			<c:otherwise>
 				<!-- 로그인 후 -->	
-				<li><a href="${pageContext.request.contextPath }/user?a=modifyform">회원정보수정</a></li>
-				<li><a href="${pageContext.request.contextPath }/user?a=logout">로그아웃</a></li> 
+				<li><a href="${pageContext.request.contextPath }/user/modifyform">회원정보수정</a></li>
+				<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li> 
 				<li> ${authUser.name}님 안녕하세요^^;</li>
 			</c:otherwise>	
 		</c:choose>		
