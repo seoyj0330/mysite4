@@ -36,5 +36,23 @@
 				update board set hit = hit+1 where no = #{no}
 		]]>
 	</update>
+	
+	<update id= "modify" parameterType = "com.javaex.vo.BoardVo">
+		<![CDATA[
+				update board  set content = #{content}, title = #{title} 
+			    where no = #{no}
+		]]>
+	</update>
+	
+	<select id= "search" parameterType="String" resultType="com.javaex.vo.UserBoardVo">
+		<![CDATA[
+				select b.no boardno, title, name, hit, to_char(b.reg_date, 'YY-MM-DD HH:MI:SS') regDate 
+				from board b, users u 
+				where b.user_no = u.no 
+				and title like #{kwd}
+				order by boardno desc
+		]]>
+	</select>
+	
 </mapper>
 	

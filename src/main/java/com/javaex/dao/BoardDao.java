@@ -41,4 +41,16 @@ public class BoardDao {
 		
 		return sqlSession.update("board.hit", no);
 	}
+
+	public int modify(BoardVo boardVo) {
+		
+		return sqlSession.update("board.modify", boardVo);
+	}
+	
+	public List<UserBoardVo> search(String kwd) {
+		
+		List<UserBoardVo> slist =sqlSession.selectList("board.search","%"+kwd+"%");
+		
+		return slist;
+	}
 }

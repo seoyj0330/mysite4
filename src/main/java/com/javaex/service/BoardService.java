@@ -15,9 +15,15 @@ public class BoardService {
 	@Autowired
 	private BoardDao bDao;
 
-	public List<UserBoardVo> getList(){
+	public List<UserBoardVo> getList(String kwd){
+		List<UserBoardVo> ublist; 
 		
-		return bDao.getList();
+		if(kwd== "") {
+			ublist = bDao.getList();
+		} else {
+			ublist = bDao.search(kwd);
+		}
+		return ublist;
 	}
 	
 	public int write(BoardVo boardVo) {
@@ -37,6 +43,12 @@ public class BoardService {
 	}
 	
 	public BoardVo getArticle(int no) {
+	
 		return bDao.getArticle(no);
+	}
+
+	public int modify(BoardVo boardVo) {
+	
+		return bDao.modify(boardVo);
 	}
 }

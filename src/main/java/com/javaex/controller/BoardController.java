@@ -25,13 +25,13 @@ public class BoardController {
 	private BoardService bService;
 	
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String list(Model model) {
+	public String list(Model model, @RequestParam(value="kwd", required=false, defaultValue="" )String kwd) {
 		
 		System.out.println("list 진입");
-		
-		List<UserBoardVo> ublist = bService.getList();
+		List<UserBoardVo> ublist = bService.getList(kwd);
+
 		model.addAttribute("list", ublist);
-		
+
 		return "board/list";
 	}
 	
@@ -87,12 +87,28 @@ public class BoardController {
 		if(authUser !=null) {
 			BoardVo bvo = bService.getArticle(no);
 			model.addAttribute("bvo", bvo);
+			
 			return "board/modify";
+		
 		}else {
 			return "user/loginform";
 		}
 	}
 	
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String modify(@RequestParam("no") int no, @ModelAttribute BoardVo boardVo) {
+		
+		System.out.println("modify 진입");
+		
+		boardVo.setNo(no);
+		int result =bService.modify(boardVo);
+		
+		System.out.println(boardVo.toString());
+		System.out.println("처리결과 : " + result);
+		
+		return "redirect:/board/list";
+		
+	}
 	
 	
 }
