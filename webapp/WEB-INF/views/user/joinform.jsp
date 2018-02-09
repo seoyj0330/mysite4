@@ -5,6 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
 	<title>Insert title here</title>
 </head>
 <body>
@@ -28,7 +29,9 @@
 	
 						<label class="block-label" for="email">이메일</label>
 						<input id="email" name="email" type="text" value="">
-						<input type="button" value="id 중복체크">
+						<input id="CheckEmailbtn" type="button" value="id 중복체크">
+						<div id= "checkMsg"></div>
+						
 						
 						<label class="block-label">패스워드</label>
 						<input name="password" type="password" value="">
@@ -59,4 +62,34 @@
 	</div> <!-- /container -->
 
 </body>
+<script type="text/javascript">
+	$("#CheckEmailbtn").on("click",function(){
+		var email = $("#email").val();		//인풋 박스인 val 이용해서 빼내기
+		console.log(email);
+		
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath }/user/api/emailcheck",		
+			type : "post",
+			/*  contentType : "application/json",  */
+			data : {email: email},			//앞은 글자(구별할 수 있는 key값), 뒤에는 실제 데이터 
+
+			dataType : "json",
+			success : function(result){
+				console.log(result);
+				if(result==true) {
+					$("#checkMsg").text("사용할 수 있는 이메일입니다.");
+				} else {
+					$("#checkMsg").text("사용 중인 이메일입니다.");
+				}
+				/*성공시 처리해야될 코드 작성*/
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	});
+
+</script>
 </html>

@@ -16,7 +16,6 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	public UserVo getUser(String email, String password) {
-	
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("email", email);
 		map.put("password", password);
@@ -25,17 +24,16 @@ public class UserDao {
 	}
 	
 	public void insert(UserVo userVo) {
-	
 		sqlSession.insert("user.join",userVo);
 	}
 	
-/*	public UserVo getUser(int no) {
-		
-		return sqlSession.selectOne("user.selectUserByNo", no);
-	}*/
-	
 	public int modify(UserVo userVo) {
-		
 		return sqlSession.update("user.modify", userVo);
 	}
+	
+	public UserVo getUser(String email) {
+		return sqlSession.selectOne("user.EmailCheck", email);
+	}
+
+
 }

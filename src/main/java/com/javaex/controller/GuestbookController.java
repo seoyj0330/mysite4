@@ -28,17 +28,16 @@ public class GuestbookController {
 		List<GuestbookVo> glist = gbService.getList();
 		model.addAttribute("list", glist);
 		
-		return "/guestbook/list";
+		return "guestbook/list";
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.GET)
 	public String add(@ModelAttribute GuestbookVo guestbookVo) {
 		System.out.println("add진입");
 		
-		int result= gbService.add(guestbookVo);
+		gbService.add(guestbookVo);
 		
 		System.out.println(guestbookVo.toString());
-		System.out.println("처리결과 : " + result);
 		
 		return "redirect:/guestbook/list";
 	}
@@ -62,7 +61,10 @@ public class GuestbookController {
 		return "redirect:/guestbook/list";
 	}
 		
-	
+	@RequestMapping(value="/listajax", method=RequestMethod.GET)
+	public String listajax() {
+		return "guestbook/listajax";
+	}
 
 	
 }

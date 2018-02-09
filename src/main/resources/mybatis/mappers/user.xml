@@ -31,4 +31,12 @@
 				where no = #{no} 
 		]]>
 	</update>
+	
+	<select id="EmailCheck" parameterType="String" resultType="com.javaex.vo.UserVo">	
+		<![CDATA[
+				select no, name, email, gender
+				from users
+				where email = #{email}
+		]]>
+	</select>
 </mapper>

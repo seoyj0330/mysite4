@@ -14,12 +14,10 @@ public class UserService {
 	
 	
 	public UserVo login(String email, String password) {
-		
 		return userDao.getUser(email,password);
 	}
 	
 	public void join(UserVo userVo){
-		
 		userDao.insert(userVo);
 	}
 
@@ -27,11 +25,18 @@ public class UserService {
 		return userDao.modify(userVo);
 	}
 	
-//	public UserVo modifyform(int no) {
-//		
-//		return userDao.getUser(no);
-//	}
-	
+	public boolean emailCheck(String email) {
+		boolean result;
+		
+		UserVo userVo = userDao.getUser(email);
+		
+		if(userVo !=null) {		//이미 email이 존재한다면 실패
+			result = false; 
+		} else {
+			result = true;
+		}
+		return result;
+	}
 
 	
 }

@@ -10,18 +10,50 @@
 		]]>
 	</select>
 	
-	<insert id="add" parameterType="com.javaex.vo.GuestbookVo">
+ 	<insert id="add" parameterType="com.javaex.vo.GuestbookVo">
+		
 		<![CDATA[
 				insert into guestbook 
 				values(seq_guestbook_no.nextval, #{name}, #{password}, #{content}, sysdate)
 		]]>
-	</insert>
-	
+	</insert> 
+
 	<delete id="delete" parameterType="map">
 		<![CDATA[
 				delete from guestbook where no = #{no} and password =#{password}
 		]]>
 	</delete>
 	
+	<select id="selectListByPage" parameterType="int" resultType="com.javaex.vo.GuestbookVo">
+		<![CDATA[
+				select t.r, no, name, password, content, reg_date regDate
+				from (select rownum r, no, name, password, content, reg_date
+					  from (select no, name, password, content, reg_date
+    					    from guestbook
+      						order by reg_date desc)o
+      					)t
+				where r >= (#{page}-1)*5 +1
+				and r <= #{page}*5
+		
+		]]>
+	</select>
+	
+	<insert id="addAjax" parameterType="com.javaex.vo.GuestbookVo">
+			
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">	
+					select seq_guestbook_no.nextval from dual
+		</selectKey>
+		
+		<![CDATA[
+				insert into guestbook 
+				values(#{no}, #{name}, #{password}, #{content}, sysdate)
+		]]>
+	</insert>
+	
+	<select id="sysdate" resultType="String">
+		<![CDATA[
+				select sysdate from dual
+		]]>
+	</select>
 	
 </mapper>

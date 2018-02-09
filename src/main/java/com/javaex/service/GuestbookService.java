@@ -19,13 +19,28 @@ public class GuestbookService {
 		return gbdao.getList();
 	}
 	
-	public int add(GuestbookVo guestbookVo) {
+	public void add(GuestbookVo guestbookVo) {
 		
-		return gbdao.add(guestbookVo);
+		gbdao.add(guestbookVo);
 	}
 	
 	public int delete(int no, String password) {
 		
 		return gbdao.delete(no, password);
 	}
+	
+	public List<GuestbookVo> getgbListPage(int page) {
+		
+		return gbdao.selectgbListPage(page);
+	}
+	
+	public GuestbookVo insertajax(GuestbookVo gbVo) {
+		gbdao.addAjax(gbVo);		//no값 받아온 것에다가 
+		
+		String sysdate = gbdao.sysdate(gbVo);	//날짜받아온것을 넣고
+		gbVo.setRegDate(sysdate);	//vo에 날짜를 넣어줌
+		
+		return gbVo;
+	}
+	
 }

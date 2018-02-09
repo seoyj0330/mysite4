@@ -22,8 +22,8 @@ public class GuestbookDao {
 		return list;
 	}
 	
-	public int add(GuestbookVo guestbookVo) {
-		return sqlSession.insert("gb.add", guestbookVo);
+	public void add(GuestbookVo guestbookVo) {
+		sqlSession.insert("gb.add", guestbookVo);
 	}
 
 	public int delete(int no, String password) {
@@ -33,5 +33,26 @@ public class GuestbookDao {
 		gbmap.put("password", password);
 
 		return sqlSession.delete("gb.delete", gbmap);
+	}
+	
+	public List<GuestbookVo> selectgbListPage(int page){
+		
+		return sqlSession.selectList("gb.selectListByPage",page);
+	}
+	
+	public GuestbookVo addAjax(GuestbookVo guestbookVo) {
+		System.out.println("guestbookVo.no : " + guestbookVo.getNo());		//no받아오기전
+		
+		sqlSession.insert("gb.addAjax", guestbookVo);
+		int getNo = guestbookVo.getNo();		//새로 받아온 값 
+		System.out.println("받아온값 " + getNo);
+			
+		return guestbookVo;
+	}
+	
+	public String sysdate(GuestbookVo guestbookVo) {
+		
+		return sqlSession.selectOne("gb.sysdate");
+		
 	}
 }
