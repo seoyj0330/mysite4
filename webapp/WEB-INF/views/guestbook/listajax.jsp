@@ -153,7 +153,7 @@ $("#btn_del").on("click", function(){
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 		}
-		});d
+		});
 });
 
 

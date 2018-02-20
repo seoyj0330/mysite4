@@ -3,12 +3,20 @@
 
 <mapper namespace="board">
 
-	<select id = "allList" resultType="com.javaex.vo.UserBoardVo">
+	<select id = "allList" parameterType = "map" resultType="com.javaex.vo.UserBoardVo">
 		<![CDATA[
-				 select b.no boardno, title, content, hit, to_char(b.reg_date, 'YY-MM-DD HH:MI:SS') regDate, user_no, name 
-				 from board b, users u 
-				 where b.user_no = u.no 
-				 order by boardno desc
+				select rnum, no boardno, title, hit, to_char(reg_date, 'YYYY-MM-DD HH:MI') regDate, user_no, name
+				from (select rownum rnum, no, title, hit, reg_date, user_no, name
+     				  from (select b.no, b.title, b.hit, b.reg_date, b.user_no, u.name
+           				    from board b , users u
+         				    where b.user_no=u.no
+        ]]>
+        				<if test = "kwd !=null and kwd != '' ">
+        					and title like '%'||#{kwd}||'%'
+        				</if>
+        <![CDATA[				 				    
+            				order by no desc))
+     		    where rnum> #{startRnum} and rnum<=#{endRnum}
 		]]>
 	</select>
 	
@@ -44,7 +52,7 @@
 		]]>
 	</update>
 	
-	<select id= "search" parameterType="String" resultType="com.javaex.vo.UserBoardVo">
+<!-- 	<select id= "search" parameterType="String" resultType="com.javaex.vo.UserBoardVo">
 		<![CDATA[
 				select b.no boardno, title, name, hit, to_char(b.reg_date, 'YY-MM-DD HH:MI:SS') regDate 
 				from board b, users u 
@@ -52,7 +60,21 @@
 				and title like #{kwd}
 				order by boardno desc
 		]]>
+	</select> -->
+	
+	<select id="totalCount" parameterType= "String" resultType="int">
+			<![CDATA[
+					select count(*)
+					from board
+			]]>			<!-- kwd말고 parameter로 받아야함   String으로 파라미터타입을 할 경우 우리가 정한이름(변수)로 쓸 수 없기 때문 내부적으로 parameter로 쓰라고 정해짐-->
+					<if test = "_parameter !=null and _parameter != '' ">		
+					where title like '%'||#{_parameter}||'%'
+					</if>
+					
+			<![CDATA[				
+			]]>
 	</select>
+	
 	
 </mapper>
 	

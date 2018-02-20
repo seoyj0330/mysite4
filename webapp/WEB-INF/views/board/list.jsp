@@ -34,10 +34,10 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>				
-					<c:forEach items = "${list }" var="userboardVo">
+					<c:forEach items = "${ubmap.boardlist }" var="userboardVo">
 					<tr>
 						<td>${userboardVo.boardno }</td>
-						<td><a href="${pageContext.request.contextPath }/board/view?boardno=${userboardVo.boardno }">${userboardVo.title }</a></td>
+						<td><a href="${pageContext.request.contextPath }/board/view?boardno=${userboardVo.boardno }&kwd=${ubmap.kwd}&crtPage=${ubmap.crtPage}">${userboardVo.title }</a></td>
 						<td>${userboardVo.name }</td>
 						<td>${userboardVo.hit }</td>
 						<td>${userboardVo.regDate }</td>
@@ -67,13 +67,35 @@
 				</table>
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li><a href="">2</a></li>
-						<li class="selected">3</li>
-						<li><a href="">4</a></li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:choose>
+							<c:when test="${ubmap.kwd }">
+								<c:if test="${ubmap.prev }">
+									<li><a href="${pageContext.request.contextPath }/board/list?crtPage=${startPageBtnNo-1}">◀</a></li>
+								</c:if>
+								
+								<c:forEach begin="${ubmap.startPageBtnNo }" end = "${ubmap.endPageBtnNo }" var= "idx"> 
+										<li><a href="${pageContext.request.contextPath }/board/list?crtPage=${idx}">${idx}</a></li>
+								</c:forEach>
+		
+								<c:if test = "${ubmap.next }">
+									<li><a href="${pageContext.request.contextPath }/board/list?crtPage=${startPageBtnNo+1}">▶</a></li>
+								</c:if>
+							</c:when>
+							
+							<c:otherwise>				<!-- 키워드가 있을 때  -->
+								<c:if test="${ubmap.prev }">
+									<li><a href="${pageContext.request.contextPath }/board/list?kwd=${ubmap.kwd }&crtPage=${startPageBtnNo-1}">◀</a></li>
+								</c:if>
+								
+								<c:forEach begin="${ubmap.startPageBtnNo }" end = "${ubmap.endPageBtnNo }" var= "idx"> 
+										<li><a href="${pageContext.request.contextPath }/board/list?kwd=${ubmap.kwd }&crtPage=${idx}">${idx}</a></li>
+								</c:forEach>
+		
+								<c:if test = "${ubmap.next }">
+									<li><a href="${pageContext.request.contextPath }/board/list?kwd=${ubmap.kwd }&crtPage=${startPageBtnNo+1}">▶</a></li>
+								</c:if>
+							</c:otherwise>	
+						</c:choose>
 					</ul>
 				</div>				
 				<c:choose>

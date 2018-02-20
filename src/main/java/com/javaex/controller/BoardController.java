@@ -1,6 +1,6 @@
 package com.javaex.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
-import com.javaex.vo.UserBoardVo;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -25,12 +24,12 @@ public class BoardController {
 	private BoardService bService;
 	
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String list(Model model, @RequestParam(value="kwd", required=false, defaultValue="" )String kwd) {
+	public String list(Model model, @RequestParam(value="crtPage", required=false, defaultValue="1" ) int crtPage , @RequestParam(value="kwd", required=false, defaultValue="" )String kwd) {
 		
-		System.out.println("list 진입");
-		List<UserBoardVo> ublist = bService.getList(kwd);
+		System.out.println("boardlist 진입");
+		Map<String, Object> ubmap = bService.getList(crtPage,kwd);		//서비스에서 주소값을 받아오는 것임 
 
-		model.addAttribute("list", ublist);
+		model.addAttribute("ubmap", ubmap);
 
 		return "board/list";
 	}
@@ -109,6 +108,5 @@ public class BoardController {
 		return "redirect:/board/list";
 		
 	}
-	
-	
+	 
 }
